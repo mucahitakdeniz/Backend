@@ -39,5 +39,17 @@ const car = {
 };
 console.log(car.getDetails());
 console.log(car.getDetails1());
-/*--------------------------------------*/
+/*--------------------------------------
+
+//? Array destructuring
+
+const testArray = ["1","2","3","4"]
+
+// const [firts,second]=testArray
+// console.log(firts); 
+// console.log(second); 
+const [firts,second,...others]=testArray
+console.log(firts); 
+console.log(others);
+*/
 
