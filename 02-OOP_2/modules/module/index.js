@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 /* -------------------------------------------------------
     MODULES
@@ -28,11 +28,12 @@ test()
 // const { test1, test2, test3 } = require('./module/')
 // test1(), test2(), test3()
 
-const { test1: newFunc, test2, test3, variable } = require('./module/')
-newFunc(), test2(), test3(), console.log(variable)
+const { test1: newFunc, test2, test3, variable } = require("./module/");
+newFunc(), test2(), test3(), console.log(variable);
 
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
+console.log("deneme");
