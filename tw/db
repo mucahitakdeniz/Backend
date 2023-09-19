@@ -1,0 +1,5 @@
+--SELECT trach_name, composer FROM tracks;
+--SELECT * FROM tracks;
+--SELECT DISTINCT composer FROM tracks;
+--SELECT DISTINCT AlbumId, MediaTypeId FROM tracks;
+--SELECT TrackId FROM tracks;
