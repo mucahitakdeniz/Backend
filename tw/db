@@ -1,5 +1,35 @@
---SELECT trach_name, composer FROM tracks;
---SELECT * FROM tracks;
---SELECT DISTINCT composer FROM tracks;
---SELECT DISTINCT AlbumId, MediaTypeId FROM tracks;
---SELECT TrackId FROM tracks;
+-- SELECT Name , Composer FROM Track
+-- SELECT * FROM Track
+-- SELECT DISTINCT Composer FROM Track
+-- SELECT DISTINCT AlbumId, MediaTypeId FROM Track
+-- SELECT name,TrackId FROM Track WHERE  Composer = 'Jerry Cantrell'
+---------------------------------------
+-- SELECT * FROM Invoice WHERE Total > 20
+-- SELECT * FROM Invoice WHERE Total < 15 LIMIT 5
+-- SELECT * FROM Invoice WHERE Total > 10 ORDER BY Total DESC LIMIT 2
+-- SELECT * FROM Invoice WHERE BillingCountry != 'Canada' ORDER BY total ASC LIMIT 10
+-- SELECT  InvoiceId,CustomerId,Total from Invoice ORDER BY CustomerId ASC , total DESC
+---------------------------------------
+-- SELECT name from Track WHERE name LIKE 'B%S'
+-- SELECT * From INVOICE WHERE InvoiceDate BETWEEN '2008-01-01' AND '2012-01-01' ORDER BY InvoiceDate DESC LIMIT 1
+-- SELECT FirstName, LastName, Country From Customer WHERE Country IN ('Norway', 'Belgium')
+-- SELECT * FROM Track WHERE Composer='Apocalyptica'
+-- SELECT count(*) FROM Track
+-- SELECT  count(*) FROM Invoice
+---------------------------------------
+-- SELECT count(DISTINCT Composer) FROM Track
+-- SELECT AlbumId, count(*) AS number_of_tracks from Track GROUP BY  AlbumId ORDER BY number_of_tracks DESC
+-- SELECT * , min(Milliseconds) from Track
+-- SELECT name , max(Milliseconds) from Track
+-- SELECT * from Track WHERE Milliseconds < (SELECT avg(Milliseconds) from Track)
+-- SELECT  Composer,Count(*) from Track GROUP BY Composer
+--------------------------------
+-- SELECT * From Track
+-- SELECT * From Genre
+-- SELECT Track.Name AS Track_Name , Genre.Name AS Genre_Name From Track JOIN GENRE ON Track.GenreId = Genre.GenreId
+-- SELECT * from Album
+-- SELECT * from Artist
+-- SELECT Artist.Name AS Artist_Name , Album.Title AS Album_Title from Artist JOIN Album ON Album.ArtistId = Artist.ArtistId
+-- SELECT Album.AlbumId, Album.Title, Track.Milliseconds from Track JOIN Album ON Album.AlbumId = Track.AlbumId ORDER By Track.Milliseconds DESC
+-- SELECT Album.AlbumId, Album.Title, Track.Milliseconds from Track JOIN Album ON Album.AlbumId = Track.AlbumId WHERE Track.Milliseconds > 2600000 ORDER By Track.Milliseconds DESC
+-- SELECT TrackId,Name,AlbumId From Track WHERE AlbumId IN (SELECT AlbumId  FROM album WHERE Title IN ('Prenda Minha', 'Heart of the Night', 'Out Of Exile'))

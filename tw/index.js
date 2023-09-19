@@ -1,3 +1,4 @@
+"use script"
 class Person {
   constructor(name) {
     this.name = name;
@@ -7,9 +8,10 @@ class Person {
   }
 }
 class BankAccount extends Person {
+  #balance=0
   constructor(name, balance) {
     super(name) ;
-    this.balance = balance;
+    this.#balance = balance;
   }
   deposit(money) {
     if (money > 0) {
@@ -17,6 +19,8 @@ class BankAccount extends Person {
     } else {
       console.log("Eksik veya Hatalı miktar girdiniz");
     }
+    console.log(this.#balance);
+
   }
   withdraw(money) {
     if (money > 0 && this.balance >= money) {
@@ -26,12 +30,16 @@ class BankAccount extends Person {
     } else {
       console.log("Eksik veya Hatalı miktar girdiniz");
     }
+    console.log(this.#balance);
+
   }
   balance() {
     return `Bakiyeniz : ${this.balance}`;
   }
+  
 }
 
 const garantBank = new BankAccount("Mucahit", 2000);
 
 console.log(garantBank.sayName());
+garantBank.deposit(+500)
