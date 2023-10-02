@@ -2,31 +2,39 @@
 /* -------------------------------------------------------
     EXPRESSJS - TODO Project with Sequelize
 ------------------------------------------------------- */
-const router = require('express').Router()
 
-const Todo = require('./todo.model')
+const express = require("express");
+const app = express();
 
-// LIST:
-router.get('/', async (req, res) => {
+require("dotenv").config();
+const PORT = process.env.PORT || 8000;
 
-    // const data = await Todo.findAll()
-    const data = await Todo.findAndCountAll()
-    res.send({
-        error: false,
-        result: data
+/* ------------------------------------------------------- */
+// Accept json data & convert to object:
+app.use(express.json())
+
+// app.all('/', (req, res) => {
+//     res.send('WELCOME TO TODO API')
+// })
+
+/* ------------------------------------------------------- */
+//* TodoModel moved to todo.model.js
+
+app.use(require('./todo.router'))
+
+/* ------------------------------------------------------- */
+
+const errorHandler = (err, req, res, next) => {
+    const errorStatusCode = res.errorStatusCode ?? 500
+    console.log('errorHandler runned.')
+    res.status(errorStatusCode).send({
+        error: true, // special data
+        message: err.message, // error string message
+        cause: err.cause, // error option cause
+        // stack: err.stack, // error details
+        body: req.body,
     })
-})
-
-// CREATE:
-router.post('/', async (req, res) => {
-
-    const data = await Todo.create(req.body)
-    res.send({
-        error: false,
-        body: req.body, // Send Data
-        message: 'Created',
-        result: data // Receive Data
-    })
-})
-
-module.exports = router
+}
+app.use(errorHandler)
+/* ------------------------------------------------------- */
+app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
