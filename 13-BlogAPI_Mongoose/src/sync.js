@@ -11,12 +11,13 @@ module.exports = async () => {
     // console.log(blogCategory._id)
 
     if (blogCategory) {
-        BlogPost.updateMany({ //? Filter:
+        const isUpdated = await BlogPost.updateMany({ //? Filter:
             "blogCategoryId": { $exists: false } // field yok ise
         }, { //? Update:
             "blogCategoryId": blogCategory._id // kaydı ata
             // $unset: { "blogCategoryId": 1 } // field sil
         }).catch(err => console.log(err))
+        // console.log(isUpdated)
     }
 
     // End:
