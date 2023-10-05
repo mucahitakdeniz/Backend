@@ -56,10 +56,11 @@ const blogCategorySchema = new mongoose.Schema({
 const blogPostSchema = new mongoose.Schema({
 
     // _id
-    blogCategoryId:{
-        type:mongoose.Schema.ObjectId,
-        required:true,
-        ref:'BlogCategory'// hangi model ile bağlantılı
+
+    blogCategoryId: {
+        type: mongoose.Schema.ObjectId, // Relational ObjectId
+        ref: 'BlogCategory', // ModelName
+        required: true,
     },
 
     title: {
