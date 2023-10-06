@@ -24,7 +24,7 @@ const blogPostSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const blogCategotySchema = new mongoose.Schema(
+const blogCategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -33,12 +33,12 @@ const blogCategotySchema = new mongoose.Schema(
     },
   },
   {
-    collection: "blogCategotySchema",
+    collection: "blogCategorySchema",
     timestamps: true,
   }
 );
 
 module.exports = {
   BlogPost: mongoose.model("BlogPost", blogPostSchema),
-  BlogCategotySchema: mongoose.model("BlogCategoty", blogCategotySchema),
+  BlogCategory: mongoose.model("BlogCategory", blogCategorySchema),
 };
