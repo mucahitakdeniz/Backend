@@ -1,6 +1,6 @@
 "use strict";
 
-const mongoose = require("mongeese");
+const mongoose = require("mongoose");
 
 const blogPostSchema = new mongoose.Schema(
   {
@@ -21,10 +21,11 @@ const blogPostSchema = new mongoose.Schema(
   },
   {
     collection: "blogPosts",
-    timesstamps: true,
+    timestamps: true,
   }
 );
 
 module.exports = {
-  blogPost: mongoose.model("BlogPost", blogPostSchema ),
+  BlogPost: mongoose.model("BlogPost", blogPostSchema),
 };
+

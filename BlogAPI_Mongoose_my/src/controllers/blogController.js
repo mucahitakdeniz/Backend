@@ -4,7 +4,7 @@ require("express-async-errors");
 
 const { BlogPost } = require("../models/blogModel");
 
-module.exports.BlogPosts = {
+module.exports.BlogPost = {
   list: async (req, res) => {
     const data = await BlogPost.find();
     res.status(200).send({
