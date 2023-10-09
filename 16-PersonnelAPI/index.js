@@ -1,26 +1,42 @@
-"use strict"
+"use strict";
 
+const express = require("express");
+const app = express();
 
-const express = require('express')
-const app = express()
+require("dotenv").config();
+const PORT = process.env.PORT;
 
-require('dotenv').config()
-const PORT=process.env.PORT
+require("express-async-errors");
 
-require('express-async-errors')
-
-
+const { dbConnection } = require("./src/configs/dbConnection");
+dbConnection();
 
 // continue from here...
+app.use(express.json());
 
+// SessionsCookies:
+app.use(require("cookie-session")({ secret: process.env.SECRET_KEY }));
 
+// res.getModelList():
+app.use(require("./src/middlewares/findSearchSortPage"));
+
+app.all("/", (req, res) => {
+  res.send({
+    error: false,
+    message: "Welcome to PERSONNEL API",
+  });
+});
+
+//department
+
+app.use("/department", require("./src/routes/department.router"));
 
 /* ------------------------------------------------------- */
 
 // errorHandler:
-app.use(require('./src/middlewares/errorHandler'))
+app.use(require("./src/middlewares/errorHandler"));
 // RUN SERVER:
-app.listen(PORT, () => console.log('http://127.0.0.1:' + PORT))
+app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
 
 /* ------------------------------------------------------- */
 // Syncronization (must be in commentLine):
