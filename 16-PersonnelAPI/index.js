@@ -29,7 +29,8 @@ app.all("/", (req, res) => {
 
 //department
 
-app.use("/department", require("./src/routes/department.router"));
+app.use("/departments", require("./src/routes/department.router"));
+app.use("/personnel", require("./src/routes/personnel.router"));
 
 /* ------------------------------------------------------- */
 
