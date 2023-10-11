@@ -1,10 +1,9 @@
-"use strict";
+"use strict"
 /* -------------------------------------------------------
     EXPRESS - Personnel API
 ------------------------------------------------------- */
-const { mongoose } = require("../configs/dbConnection");
+const { mongoose } = require('../configs/dbConnection')
 /* ------------------------------------------------------- */
-
 const passwordEncrypt = require('../helpers/passwordEncrypt')
 
 const PersonnelSchema = new mongoose.Schema({
