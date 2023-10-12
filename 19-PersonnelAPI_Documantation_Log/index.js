@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 /* -------------------------------------------------------
     EXPRESS - Personnel API
 ------------------------------------------------------- */
@@ -7,25 +7,25 @@
     $ npm i cookie-session
     $ npm i jsonwebtoken
 */
-const express = require('express')
-const app = express()
+const express = require("express");
+const app = express();
 
 /* ------------------------------------------------------- */
 // Required Modules:
 
 // envVariables to process.env:
-require('dotenv').config()
-const PORT = process.env?.PORT || 8000
+require("dotenv").config();
+const PORT = process.env?.PORT || 8000;
 
 // asyncErrors to errorHandler:
-require('express-async-errors')
+require("express-async-errors");
 
 /* ------------------------------------------------------- */
 // Configrations:
 
 // Connect to DB:
-const { dbConnection } = require('./src/configs/dbConnection')
-dbConnection()
+const { dbConnection } = require("./src/configs/dbConnection");
+dbConnection();
 
 /* ------------------------------------------------------- */
 // Middlewares:
@@ -34,7 +34,7 @@ dbConnection()
 // npm i morgan
 // https://expressjs.com/en/resources/middleware/morgan.html
 
-const morgan = require('morgan')
+const morgan = require("morgan");
 // console.log(morgan)
 // app.use(morgan('combined'))
 // app.use(morgan('IP:remote-addr TIME:[:date[clf]] REQ:":method :url HTTP/:http-version" RES::status :res[content-length] APP:":user-agent"'))
@@ -46,21 +46,23 @@ const morgan = require('morgan')
 // }))
 
 //? Write logs to file - day by day:
-const fs = require('node:fs')
-const now = new Date()
-const today = now.toISOString().split('T')[0]
-app.use(morgan('combined', {
-    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a' })
-}))
+const fs = require("node:fs");
+const now = new Date();
+const today = now.toISOString().split("T")[0];
+app.use(
+  morgan("combined", {
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: "a" }),
+  })
+);
 
 // Accept JSON:
-app.use(express.json())
+app.use(express.json());
 
 // SessionsCookies:
-app.use(require('cookie-session')({ secret: process.env.SECRET_KEY }))
+app.use(require("cookie-session")({ secret: process.env.SECRET_KEY }));
 
 // res.getModelList():
-app.use(require('./src/middlewares/findSearchSortPage'))
+app.use(require("./src/middlewares/findSearchSortPage"));
 
 // Cookie: Login/Logout Control Middleware
 // app.use(async (req, res, next) => {
@@ -105,36 +107,43 @@ app.use(require('./src/middlewares/findSearchSortPage'))
 //     })
 //     next()
 // })
-app.use(require('./src/middlewares/authentication'))
+app.use(require("./src/middlewares/authentication"));
+
+/// Swagger-UI Middleware:
+// npm i swagger-ui-express
+const swaggerUi = require('swagger-ui-express')
+const swaggerJson = require('./swagger.json')
+// Parse/Run swagger.json and publish on any URL:
+app.use('/docs/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { swaggerOptions: { persistAuthorization: true } }))
 
 /* ------------------------------------------------------- */
 // Routes:
 
 // HomePath:
-app.all('/', (req, res) => {
-    res.send({
-        error: false,
-        message: 'Welcome to PERSONNEL API',
-        // session: req.session,
-        isLogin: req.isLogin,
-        user: req.user
-    })
-})
+app.all("/", (req, res) => {
+  res.send({
+    error: false,
+    message: "Welcome to PERSONNEL API",
+    // session: req.session,
+    isLogin: req.isLogin,
+    user: req.user,
+  });
+});
 
 // /auth
-app.use('/auth', require('./src/routes/auth.router'))
+app.use("/auth", require("./src/routes/auth.router"));
 // /departments
-app.use('/departments', require('./src/routes/department.router'))
+app.use("/departments", require("./src/routes/department.router"));
 // /personnels
-app.use('/personnels', require('./src/routes/personnel.router'))
+app.use("/personnels", require("./src/routes/personnel.router"));
 
 /* ------------------------------------------------------- */
 
 // errorHandler:
-app.use(require('./src/middlewares/errorHandler'))
+app.use(require("./src/middlewares/errorHandler"));
 
 // RUN SERVER:
-app.listen(PORT, () => console.log('http://127.0.0.1:' + PORT))
+app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
 
 /* ------------------------------------------------------- */
 // Syncronization (must be in commentLine):
