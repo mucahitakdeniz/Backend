@@ -30,6 +30,29 @@ dbConnection()
 /* ------------------------------------------------------- */
 // Middlewares:
 
+// Logging:
+// npm i morgan
+// https://expressjs.com/en/resources/middleware/morgan.html
+
+const morgan = require('morgan')
+// console.log(morgan)
+// app.use(morgan('combined'))
+// app.use(morgan('IP:remote-addr TIME:[:date[clf]] REQ:":method :url HTTP/:http-version" RES::status :res[content-length] APP:":user-agent"'))
+
+// //? Write logs to file:
+// const fs = require('node:fs')
+// app.use(morgan('combined', {
+//     stream: fs.createWriteStream('./access.log', { flags: 'a' })
+// }))
+
+//? Write logs to file - day by day:
+const fs = require('node:fs')
+const now = new Date()
+const today = now.toISOString().split('T')[0]
+app.use(morgan('combined', {
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: 'a' })
+}))
+
 // Accept JSON:
 app.use(express.json())
 
@@ -82,7 +105,7 @@ app.use(require('./src/middlewares/findSearchSortPage'))
 //     })
 //     next()
 // })
-app.use(require('./src/middlewares/authenticated'))
+app.use(require('./src/middlewares/authentication'))
 
 /* ------------------------------------------------------- */
 // Routes:
