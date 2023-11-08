@@ -22,19 +22,30 @@ const PORT = process.env.PORT || 8000
 const session = require("cookie-session")
 app.use(session({ secret: process.env.SECRET_KEY || 'secret_keys_for_cookies' }))
 /* ------------------------------------------------------- */
+// Template:
+// npm i ejs
+
+const ejs = require('ejs')
+// default using: <% templateOrJSCodes %>
+// default delimiter: '%'
+// ejs.delimiter = '*' //  <* ... *>
+// default openDelimiter: '<'
+ejs.openDelimiter = '{' // {% ...
+// default closeDelimiter: '>'
+ejs.closeDelimiter = '}' // ... %}
+
+app.set('view engine', 'ejs')
+app.set('views', './public')
+
+// Accept form data & convert to object:
+app.use(express.urlencoded({ extended: true }))
+
+// Call staticFiles:
+app.use('/assets', express.static('./public/assets'))
+
+/* ------------------------------------------------------- */
 // Accept json data & convert to object:
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-
-//template
-const ejs =require('ejs')
-
-ejs.openDelimiter= '{' //defaılt <% 
-ejs.closeDelimiter= '}' //defaılt &>
-
-
-app.set('view engine','ejs')
-app.set('views','./public')
 
 // Connect to MongoDB with Mongoose:
 require('./src/dbConnection')
@@ -42,13 +53,17 @@ require('./src/dbConnection')
 // Searching&Sorting&Pagination:
 app.use(require('./src/middlewares/findSearchSortPage'))
 
-
+// HomePage:
+// app.all('/', (req, res) => {
+//     res.send('WELCOME TO BLOG API')
+// })
 
 // Routes:
-app.use('api/user', require('./src/routes/userRoute'))
-app.use('api/blog', require('./src/routes/blogRoute'))
-app.use('/', require('./src/routes/view'))
-
+// app.use('/user', require('./src/routes/userRoute'))
+// app.use('/blog', require('./src/routes/blogRoute'))
+app.use('/api/user', require('./src/routes/userRoute'))
+app.use('/api/blog', require('./src/routes/blogRoute'))
+app.use('/', require('./src/routes/view')) // publish from template
 
 /* ------------------------------------------------------- */
 // Synchronization:
