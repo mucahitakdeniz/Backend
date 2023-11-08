@@ -24,6 +24,17 @@ app.use(session({ secret: process.env.SECRET_KEY || 'secret_keys_for_cookies' })
 /* ------------------------------------------------------- */
 // Accept json data & convert to object:
 app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
+//template
+const ejs =require('ejs')
+
+ejs.openDelimiter= '{' //defaılt <% 
+ejs.closeDelimiter= '}' //defaılt &>
+
+
+app.set('view engine','ejs')
+app.set('views','./public')
 
 // Connect to MongoDB with Mongoose:
 require('./src/dbConnection')
@@ -31,14 +42,13 @@ require('./src/dbConnection')
 // Searching&Sorting&Pagination:
 app.use(require('./src/middlewares/findSearchSortPage'))
 
-// HomePage:
-app.all('/', (req, res) => {
-    res.send('WELCOME TO BLOG API')
-})
+
 
 // Routes:
-app.use('/user', require('./src/routes/userRoute'))
-app.use('/blog', require('./src/routes/blogRoute'))
+app.use('api/user', require('./src/routes/userRoute'))
+app.use('api/blog', require('./src/routes/blogRoute'))
+app.use('/', require('./src/routes/view'))
+
 
 /* ------------------------------------------------------- */
 // Synchronization:
